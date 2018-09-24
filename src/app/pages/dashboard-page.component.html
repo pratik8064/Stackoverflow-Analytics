@@ -1,0 +1,317 @@
+<div class="dashboard-top">
+    <div class="row" >
+        <h2>
+            Popular Questions
+        </h2>
+        <br/>
+        <div class="col-md-6">
+            <div class="row">
+                
+            <!--    <canvas baseChart
+                        [data]="questionChartData"
+                        [labels]="questionChartLabels"
+                        [chartType]="questionChartType"
+                        (chartHover)="questionchartClicked($event)"
+                        (chartClick)="questionchartHovered($event)"></canvas> -->
+                        
+                <canvas baseChart
+                        [datasets]="questionChartData"
+                        [labels]="questionChartLabels"
+                        [colors]="questionChartColors"
+                        [options]="lineChartOptions"
+                        [chartType]="questionChartType"
+                        (chartHover)="questionchartClicked($event)"
+                        (chartClick)="questionchartHovered($event)"
+                ></canvas>
+            </div>
+            <div class="row">
+                <br/>
+                <br/>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+    
+                </div>
+                <div class="col-md-6 text-center" style="margin-top: 10px;height: 50%">
+                    <!--<button (click)="randomizeType()" class="btn btn btn-primary">-->
+                        <!--Toggle-->
+                    <!--</button>-->
+                </div>
+                <div class="col-md-3">
+    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <br/>
+                <br/>
+            </div>
+            <div class="row">
+                <table class="w3-table-all" style="color:black">
+                    <tr>
+                        <th>
+                            Question
+                        </th>
+                        <th>Count</th>
+    
+                    </tr>
+                    <tr>
+                        <td>Best XML parser for Java</td>
+                        <td>6</td>
+    
+                    </tr>
+                    <tr>
+                        <td>Views getWidth() and getHeight() returns 0</td>
+                        <td>6</td>
+    
+                    </tr>
+                    <tr>
+                        <td>Iterate through a HashMap [duplicate]</td>
+                        <td>6</td>
+    
+                    </tr>
+                    <tr>
+                        <td>How to add JTable in JPanel with null layout?</td>
+                        <td>6</td>
+                    </tr>
+    
+                </table>
+            </div>
+            <div class="row">
+                <br/>
+                <br/>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row" *ngIf="doughnutChartDataLoaded">
+    <h2>
+        Total Actions (social visualization)
+    </h2>
+    <br/>
+    <div class="col-md-6" style="display: block">
+        <div class="row">
+            <canvas baseChart
+                    [data]="doughnutChartData"
+                    [labels]="doughnutChartLabels"
+                    [chartType]="doughnutChartType"
+                    [colors] = "donutColors"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event);userOrOverall()"></canvas>
+        </div>
+        <div class="row">
+            <br/>
+            <br/>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6 text-center" style="margin-top: 10px;height: 50%">
+                <button style="color:black;" *ngIf="doughnutChartType == 'doughnut'" (click)="userOrOverall()" class="btn btn">
+                    Show for All Users Data
+                </button>
+                <button style="color:black;" *ngIf="doughnutChartType == 'pie'" (click)="userOrOverall()" class="btn btn">
+                    Show for current User Data
+                </button>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <br/>
+            <br/>
+        </div>
+        <div class="row">
+            <table class="w3-table-all" style="color:black">
+                <tr>
+                    <th>
+                        User Activity <span *ngIf="doughnutChartType == 'doughnut'">Logged User</span> <span
+                        *ngIf="doughnutChartType == 'pie'">All Users</span>
+                    </th>
+                    <th>Count</th>
+                </tr>
+                <tr>
+                    <td>Favorite Action</td>
+                    <td> {{doughnutChartData[0]}}</td>
+                </tr>
+                <tr>
+                    <td>UpVote Action</td>
+                    <td> {{doughnutChartData[1]}}</td>
+                </tr>
+                <tr>
+                    <td>DownVote Action</td>
+                    <td> {{doughnutChartData[4]}}</td>
+                </tr>
+
+                <tr>
+                    <td>Fetch Action</td>
+                    <td> {{doughnutChartData[2]}}</td>
+                </tr>
+                <tr>
+                    <td>Click Action</td>
+                    <td> {{doughnutChartData[3]}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <br/>
+            <br/>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+</div>
+<div class="row" *ngIf="lineChartDataLoaded">
+    <h2>
+        User actions (social comparison)
+    </h2>
+    <br/>
+    <div class="col-md-6">
+        <div class="row">
+            <canvas baseChart
+                    [datasets]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [chartType]="lineChartType"
+                    (chartHover)="dynamicChartHovered($event)"
+                    (chartClick)="dynamicChartClicked($event)"></canvas>
+        </div>
+        <div class="row">
+            <br/>
+            <br/>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-6 text-center" style="margin-top: 10px;height: 50%">
+                <!-- <button (click)="randomizeType()" class="btn btn btn-primary">
+                    Toggle
+                </button> -->
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>
+        <div class="col-md-6">
+            <div class="row">
+                <br/>
+                <br/>
+            </div>
+            <div class="row">
+                <table class="w3-table-all" style="color:black" >
+                    <tr>
+                        <th>
+                            User
+                        </th>
+                        <th>Favorite</th>
+                        <th>UpVote</th>
+                        <th>DownVote</th>
+                        <th>Search</th>
+                        <th>Question Click</th>
+                    </tr>
+                    <tr>
+                        <td>aaa</td>
+                        <td> {{lineChartData[0].data[0]}}</td>
+                        <td> {{lineChartData[0].data[1]}}</td>
+                        <td> {{lineChartData[0].data[4]}}</td>
+                        <td> {{lineChartData[0].data[2]}}</td>
+                        <td> {{lineChartData[0].data[3]}}</td>
+                    </tr>
+                    <tr>
+                        <td>bbb</td>
+                        <td> {{lineChartData[1].data[0]}}</td>
+                        <td> {{lineChartData[1].data[1]}}</td>
+                        <td> {{lineChartData[1].data[4]}}</td>
+                        <td> {{lineChartData[1].data[2]}}</td>
+                        <td> {{lineChartData[1].data[3]}}</td>
+                    </tr>
+                    <tr>
+                        <td>ccc</td>
+                        <td> {{lineChartData[2].data[0]}}</td>
+                        <td> {{lineChartData[2].data[1]}}</td>
+                        <td> {{lineChartData[2].data[4]}}</td>
+                        <td> {{lineChartData[2].data[2]}}</td>
+                        <td> {{lineChartData[2].data[3]}}</td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="row">
+                <br/>
+                <br/>
+            </div>
+        </div>
+</div>
+
+<div class="row">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+</div>
+
+<div class="row">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+</div>
+<div class="row">
+    <h2>
+        Analysis and Findings
+    </h2>
+    <ul style="list-style: decimal">
+        
+        <li>
+            <p>
+                First visualization tells us about popular questions among data collected from all users. This visualization is 
+                interactive. On hover one can see count of click action on those question.
+            </p>
+            <p>
+                Significance of this visualization is we can see most frequently searched questions. Findings from this visualization is that users are more interested in knowing how to use Swing from JAVA to create user interface,
+                since question on JPanel are frequently searched. Also users are seeking info on HashMap datastructure which means they are not that experianced with Java libraries.
+            </p>
+        </li>
+
+        <li>
+            <p>
+                Second visualization helps us understand about user's activities. Data collected is properly parsed and showed in table.
+                Viewer can hover on chart to see count of activities and on clicking button can switch between data for current user and total users.
+                doughnut chart shows data for current user and pie chart for all users.
+            </p>
+            
+            <p>
+                Significance of this visualization is that we get overview of all activities for users. Findings from this visualization 
+                is that users are more prone to user Click and Favorite actiions since they have highest count than other actions. It helps us understand which feature is used most.
+            </p>
+            
+        </li>
+        <li>
+            <p>
+                Third visualization shows us comparison between all user activities. Line chart can easily help us understand relative count of activities. On hover
+                viewer can see count for that activity for respective user. Significance of this visualization is that it can help us understant most frequestly done activities
+                of user in comparison to other users.
+            </p>
+            
+            <p>
+                Finding from this visualization is that user 'aaa' is less intersted to use Favorite action where user 'bbb' is using it frequently.
+                Both user 'bbb' and 'ccc' have not used DownVote. It seems they have found correct answers only.
+
+            </p>
+        </li>
+        
+    </ul>
+</div>
+</div>

@@ -1,0 +1,81 @@
+<div class = "black">
+<div class="column" *ngIf="currentUser() | async as user">
+    <div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default" >
+            <div class="panel-heading">User Information</div>
+            <ul class="list-group" >
+                <li class="list-group-item">Email: {{user.email}}</li>
+                <!--<li class="list-group-item">UserName: {{user.displayName}}</li> -->
+                <!-- <li class="list-group-item">Uid: {{user.uid}}</li> -->
+                <li class="list-group-item">
+                    <a href="#" class="btn btn-block btn-custom" (click)="navigateToStackOverflow()">Click here to navigate to Stack Overflow page</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6">
+            <div class = "panel panel-default">
+                <div class="panel-heading">Actions logged</div>
+                <div class="row">
+                    <div class="col-md-4">Click Action</div>
+                    <div class="col-md-8">It helps to track which question was clicked</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Upvote Action</div>
+                    <div class="col-md-8">Helps to track which answer was upvoted by user</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Downvote Action</div>
+                    <div class="col-md-8">Helps to track which answer was downvoted by user</div>
+                </div>
+                <div class="row">
+                        <div class="col-md-4">Favourite Action</div>
+                        <div class="col-md-8">Helps to track which question was added as Favourite </div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-4">Fetch action</div>
+                    <div class="col-md-8">Helps to track what question user wanted to search for</div>
+                </div>                
+            </div>
+    </div>
+</div>
+
+<div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default" >
+            <div class="panel-heading">Login History</div>
+            <ul *ngIf="currentLoginTimes() as currentLoginTimes">
+                <li>
+                    <ng-container *ngFor=" let item of currentLoginTimes | async">
+                        <ul *ngIf="item.$key == user.uid">
+                            <li *ngFor="let obj of item">
+                                {{obj.key }}) {{obj.login_time}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                </li>
+            </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default" >
+            <div class="panel-heading">Activity history</div>
+            <ul  *ngIf="getListOfActivities() as listOfActivities">
+                <li >
+                <ng-container *ngFor=" let item of listOfActivities | async">
+                    <ul  *ngIf="item.$key == user.uid && item != undefined">
+                        <li *ngFor="let key of listOfActivitiesKeys">
+                            <span style="font-weight:bold ">{{item[key].action}} </span> <span> : {{item[key].subject}} </span>
+                            <br/>
+                            <span style="font-weight: 100"> at {{item[key].datetime}}</span>
+                        </li>
+                    </ul>
+                </ng-container></li>
+            </ul>
+            </div>
+        </div>
+    </div>    
+</div>
+</div>
